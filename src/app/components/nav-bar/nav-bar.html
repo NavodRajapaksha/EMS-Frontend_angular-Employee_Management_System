@@ -7,15 +7,28 @@
     <!-- Menu -->
     <div class="justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
+        
         <li class="nav-item mx-2">
-          <a class="nav-link active border-bottom border-primary" href="#">Home</a>
+          <a class="nav-link"
+              routerLink="/"
+              routerLinkActive=" active border-bottom border-primary"
+              [routerLinkActiveOptions]="{exact:true}">Home</a>
         </li>
+        
         <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Employees</a>
+          <a class="nav-link"
+             routerLink="/view-employees"
+             routerLinkActive=" active border-bottom border-primary"
+             [routerLinkActiveOptions]="{exact:false}">Employees</a>
         </li>
+
         <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Add Employee</a>
+          <a class="nav-link"
+             routerLink="/add-employee"
+             routerLinkActive=" active border-bottom border-primary"
+             [routerLinkActiveOptions]="{exact:false}">Add Employee</a>
         </li>
+
       </ul>
     </div>
 

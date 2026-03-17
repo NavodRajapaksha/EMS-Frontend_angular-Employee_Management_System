@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NavBar } from "../nav-bar/nav-bar";
 
 @Component({
   selector: 'app-view-employees',
-  imports: [],
+  imports: [NavBar],
   templateUrl: './view-employees.html',
   styleUrl: './view-employees.css',
 })
