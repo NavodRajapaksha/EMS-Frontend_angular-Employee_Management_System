@@ -18,7 +18,7 @@ export class ViewEmployees implements OnInit {
    }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/employee/all').subscribe((data) =>{
+    this.http.get('http://localhost:8080/all').subscribe((data) =>{
       this.employeeArray = data as any[];
       console.log('Employee data fetched:', this.employeeArray);
     })
