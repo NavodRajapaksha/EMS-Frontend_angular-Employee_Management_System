@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { NavBar } from "../nav-bar/nav-bar";
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-employees',
-  imports: [NavBar, FormsModule],
+  imports: [NavBar, FormsModule, RouterLink],
   templateUrl: './add-employees.html',
   styleUrl: './add-employees.css',
 })
 export class AddEmployees {
-  
-  // Employee properties
+
   public employee = {
     name: '',
     email: '',
@@ -21,26 +21,27 @@ export class AddEmployees {
 
   constructor(private http: HttpClient) {}
 
-  // save function to send employee data to the backend
   saveEmployee() {
-    console.log('Saving employee:', this.employee);
-
     this.http.post('http://localhost:8080/employee/save-obj', this.employee).subscribe({
-      next : (response) => {
+      next: (response) => {
         console.log('Employee added successfully:', response);
-        
-        alert('Employee added successfully!');
-        // Clear the form after successful submission
-        this.employee = {
-          name: '',
-          email: '',
-          age: null,
-        };
+        this.employee = { name: '', email: '', age: null };
+        Swal.fire({
+          title: 'Success!',
+          text: 'Employee added successfully!',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
       },
       error: (error) => {
         console.error('Error adding employee:', error);
-        alert('Failed to add employee. Please try again.');
+        Swal.fire({
+          title: 'Error!',
+          text: error.error?.Message || 'Failed to add employee. Please try again.',
+          icon: 'error'
+        });
       }
-    })
-    }
+    });
+  }
 }
