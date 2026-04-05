@@ -1,59 +1,65 @@
-# EmsFrontend
+# EMS Frontend — Employee Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+A responsive Angular frontend for an Employee Management System, connected to a Spring Boot backend API for seamless employee data management.
 
-## Development server
+## 🛠️ Built With
 
-To start a local development server, run:
+- Angular 21
+- TypeScript
+- Bootstrap 5
+- Bootstrap Icons
+- SweetAlert2
+- RxJS
 
+## ✨ Features
+
+- View all employees in a searchable table
+- Add new employees via a form
+- Edit employee details with an inline modal
+- Delete employees with confirmation dialog
+- SweetAlert2 notifications for all actions
+- Responsive navbar with active route highlighting
+
+## 📋 Prerequisites
+
+- Node.js
+- npm
+- Angular CLI
+- EMS Spring Boot backend running on `http://localhost:8080`
+
+## ⚙️ Setup & Installation
+
+1. Clone the repository
 ```bash
-ng serve
+   git clone https://github.com/NavodRajapaksha/EMS-Frontend_angular-Employee_Management_System.git
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Install dependencies
 ```bash
-ng generate component component-name
+   npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+3. Run the development server
 ```bash
-ng generate --help
+   ng serve
 ```
 
-## Building
+4. Open your browser at `http://localhost:4200`
 
-To build the project run:
+## 📡 API Endpoints Used
 
-```bash
-ng build
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/employee/all` | Get all employees |
+| POST | `/employee/save-obj` | Add a new employee |
+| PUT | `/employee/update` | Update an employee |
+| DELETE | `/employee/by-id/{id}` | Delete an employee |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🔗 Backend Repository
 
-## Running unit tests
+[EMS Spring Boot Backend](https://github.com/NavodRajapaksha/EMS_Springboot-simple_Employee_management_System)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 📬 Contact
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- LinkedIn: [Navod Rajapaksha](https://www.linkedin.com/in/navod-rajapaksha/)
+- GitHub: [NavodRajapaksha](https://github.com/NavodRajapaksha)
