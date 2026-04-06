@@ -32,11 +32,19 @@
       <div class="mb-3">
         <label>Email</label>
         <input type="email"
-               class="form-control"
-               [(ngModel)]="employee.email"
-               name="email"
-               placeholder="john.doe@company.com"
-               required>
+              class="form-control"
+              [(ngModel)]="employee.email"
+              name="email"
+              #emailField="ngModel"
+              placeholder="john.doe@company.com"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        
+        @if (emailField.invalid && (emailField.dirty || emailField.touched)) {
+          <div class="text-danger small mt-1">
+            Please enter a valid email address.
+          </div>
+        }
       </div>
 
       <!-- Age -->
