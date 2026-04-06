@@ -15,39 +15,67 @@ import Swal from 'sweetalert2';
 export class ViewEmployees implements OnInit {
 
   public employeeArray = signal<any[]>([]);
+  private allEmployees: any[] = []; // Temporary storage for all records to support frontend filtering
   public showModal = signal(false);
   public selectedEmployee: any = {};
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.fetchEmployees();
+  }
+
+  // Fetch all employees from backend
+  fetchEmployees(): void {
     this.http.get('http://localhost:8080/employee/all').subscribe((data) => {
-      this.employeeArray.set(data as any[]);
+      const employees = data as any[];
+      this.allEmployees = employees; // Store original data
+      this.employeeArray.set(employees); // Set data for the table view
     });
   }
 
-  // Modal open 
+  // Frontend search logic (Filters as you type)
+  searchByEmail(searchText: string): void {
+    const term = searchText.toLowerCase().trim();
+
+    if (!term) {
+      // If search is empty, restore the original list
+      this.employeeArray.set(this.allEmployees);
+      return;
+    }
+
+    // Filter local array based on name or email
+    const filtered = this.allEmployees.filter(emp => 
+      emp.email.toLowerCase().includes(term) || 
+      emp.name.toLowerCase().includes(term)
+    );
+
+    this.employeeArray.set(filtered);
+  }
+
+  // Open Edit Modal
   openEditModal(employee: any): void {
-    this.selectedEmployee = { ...employee }; // copy කරනවා
+    this.selectedEmployee = { ...employee }; // Create a shallow copy to avoid direct mutation
     this.showModal.set(true);
   }
 
-  //Modal close
+  // Close Modal
   closeModal(): void {
     this.showModal.set(false);
     this.selectedEmployee = {};
   }
 
-  // Update function
+  // Update employee details
   updateEmployee(): void {
     this.http.put('http://localhost:8080/employee/update', this.selectedEmployee).subscribe({
-      next: (response: any) => {
-        // Array \update and refresh
-        this.employeeArray.set(
-          this.employeeArray().map(emp =>
-            emp.id === this.selectedEmployee.id ? this.selectedEmployee : emp
-          )
+      next: () => {
+        // Update both the display signal and the original storage array
+        const updatedList = this.allEmployees.map(emp =>
+          emp.id === this.selectedEmployee.id ? { ...this.selectedEmployee } : emp
         );
+        this.allEmployees = updatedList;
+        this.employeeArray.set(updatedList);
+        
         this.closeModal();
         Swal.fire({
           title: 'Updated!',
@@ -67,7 +95,7 @@ export class ViewEmployees implements OnInit {
     });
   }
 
-  // delete function 
+  // Delete employee from database and UI
   deleteEmployee(id: number): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -83,9 +111,10 @@ export class ViewEmployees implements OnInit {
         this.http.delete(`http://localhost:8080/employee/by-id/${id}`, { responseType: 'text' }).subscribe({
           next: (response: any) => {
             if (!response.includes('not found')) {
-              this.employeeArray.set(
-                this.employeeArray().filter(emp => emp.id !== id)
-              );
+              // Filter out the deleted employee from both arrays
+              this.allEmployees = this.allEmployees.filter(emp => emp.id !== id);
+              this.employeeArray.set(this.allEmployees);
+
               Swal.fire({
                 title: 'Deleted!',
                 text: 'Employee has been deleted.',

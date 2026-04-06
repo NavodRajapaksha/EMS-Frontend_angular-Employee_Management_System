@@ -10,7 +10,12 @@
 
   <!-- Search -->
   <div class="mb-3">
-    <input type="text" class="form-control" placeholder="Search by name or email...">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search by name or email..."
+      #emailSearch
+      (input)="searchByEmail(emailSearch.value)">
   </div>
 
   <!-- Table Card -->
